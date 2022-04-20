@@ -5,7 +5,7 @@
         <clobbers target="cordova.PIP" />
     </js-module>
     <platform name="android">
-        <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application/activity">
+        <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application/activity[@android:name='MainActivity']">
             <activity android:supportsPictureInPicture="true" android:resizeableActivity="true" />
         </edit-config>
         <config-file parent="/*" target="res/xml/config.xml">
