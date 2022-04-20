@@ -10,7 +10,7 @@
         </edit-config>
         <config-file parent="/*" target="res/xml/config.xml">
             <feature name="PIP">
-                <param name="android-package" value="qik.cordova.pip" />
+                <param name="android-package" value="qik.cordova.pip.PIP" />
             </feature>
         </config-file>
         <source-file src="src/android/PIP.java" target-dir="src/qik/cordova/pip" />
