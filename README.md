@@ -1,7 +1,7 @@
 # PictureInPicture Mode (PIP) plugin for cordova android
 Cordova plugin to enable PictureinPicture support for android > 8.0
 
-Based on the plugin [cordova-plugin-pip-mode](https://github.com/efoxbr/cordova-plugin-pip-mode) present in the npm repository. 
+Based on the plugin [cordova-plugin-pip-mode](https://github.com/efoxbr/cordova-plugin-pip-mode) present in the github repository. 
 
 ## Install
 ```
