@@ -1,6 +1,6 @@
 cordova.addConstructor(function (){
 	var exec = cordova.exec;
-	window.PictureInPicture = {
+	window.cordova.PIP = {
 		enter: function (width, height, success, error) {
 			exec(success, error, "PIP", "enter", [width, height]);
 		},
