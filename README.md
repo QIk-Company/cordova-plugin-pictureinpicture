@@ -8,6 +8,14 @@ Based on the plugin [cordova-plugin-pip-mode](https://github.com/efoxbr/cordova-
 cordova plugin add https://github.com/Qik-Company/cordova-plugin-pictureinpicture.git
 ```
 
+or if you see any warning/error regarding conflict when edit-config
+```
+cordova plugin add https://github.com/Qik-Company/cordova-plugin-pictureinpicture.git --force
+```
+
+
+
+
 ## API
 
 Methods:
