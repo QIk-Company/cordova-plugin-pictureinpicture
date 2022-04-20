@@ -1,0 +1,25 @@
+{
+  "name": "qik.cordova.pip",
+  "version": "0.0.1",
+  "description": "",
+  "cordova": {
+    "id": "qik.cordova.pip",
+    "platforms": [
+      "android"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Qik-Company/cordova-plugin-pictureinpicture.git"
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Qik-Company/cordova-plugin-pictureinpicture/issues"
+  },
+  "homepage": "https://github.com/Qik-Company/cordova-plugin-pictureinpicture#readme"
+}

@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="qik.cordova.pip" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>PIP</name>
+    <js-module name="PIP" src="www/PIP.js">
+        <clobbers target="cordova.PIP" />
+    </js-module>
+    <platform name="android">
+        <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application/activity">
+            <activity android:supportsPictureInPicture="true" android:launchMode="singleTask" android:resizeableActivity="true" />
+        </edit-config>
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="PIP">
+                <param name="android-package" value="qik.cordova.pip" />
+            </feature>
+        </config-file>
+        <source-file src="src/android/PIP.java" target-dir="src/qik/cordova/pip" />
+    </platform>
+</plugin>
