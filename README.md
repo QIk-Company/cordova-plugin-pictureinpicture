@@ -10,12 +10,6 @@ Based on the plugin [cordova-plugin-pip-mode](https://github.com/efoxbr/cordova-
 cordova plugin add https://github.com/Qik-Company/cordova-plugin-pictureinpicture.git
 ```
 
-or if you see any warning/error regarding conflict when edit-config
-
-```
-cordova plugin add https://github.com/Qik-Company/cordova-plugin-pictureinpicture.git --force
-```
-
 ## Setup
 
 Adding on config.xml to prevent conflict when many plugins try to edit same manifest's attribute
@@ -72,7 +66,9 @@ Methods:
   );
   ```
 - **onPipModeChanged**(success: function, error: function)
+
   - Call to register and handle pip-mode-changed events
+
   ```javascript
   cordova.PIP.onPipModeChanged(
     function (result) {
@@ -82,4 +78,20 @@ Methods:
       console.log(error);
     }
   );
+  ```
+
+- **onUserDismissed**(callback: function)
+
+  - Call to register and handle pip-mode-dismissed event
+
+  ```javascript
+  cordova.PIP.onUserDismissed(function () {
+    console.log('User dismissed PIP mode');
+  });
+  ```
+
+- **reset**()
+  - Remove all listeners (onPipModeChanged, onUserDismissed) and reset the plugin
+  ```javascript
+  cordova.PIP.reset();
   ```
