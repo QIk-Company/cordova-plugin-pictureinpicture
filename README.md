@@ -17,9 +17,10 @@ Adding on config.xml to prevent conflict when many plugins try to edit same mani
 > Failed to install 'qik.cordova.pip': Error: There was a conflict trying to modify attributes with <edit-config> in plugin qik.cordova.pip. The conflicting plugin, undefined, already modified the same attributes. The conflict must be resolved before qik.cordova.pip can be added. You may use --force to add the plugin and overwrite the conflicting attributes.
 
 ```
-<custom-preference name="android-manifest/application/activity[@android:name='MainActivity']/@android:supportsPictureInPicture" value="true" />
-<custom-preference name="android-manifest/application/activity[@android:name='MainActivity']/@android:launchMode" value="singleTask" />
-<custom-preference name="android-manifest/application/activity[@android:name='MainActivity']/@android:resizeableActivity" value="true" />
+<custom-preference name="android-manifest/application/activity/@android:name" value="PIPActivity" />
+<custom-preference name="android-manifest/application/activity/@android:supportsPictureInPicture" value="true" />
+<custom-preference name="android-manifest/application/activity/@android:launchMode" value="singleTask" />
+<custom-preference name="android-manifest/application/activity/@android:resizeableActivity" value="true" />
 ```
 
 ## API

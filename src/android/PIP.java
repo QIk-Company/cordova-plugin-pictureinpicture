@@ -1,6 +1,5 @@
 package qik.cordova.pip;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.app.Activity;
 import android.app.PictureInPictureParams;
 import android.util.Rational;
@@ -20,7 +19,7 @@ public class PIP extends CordovaPlugin {
     private CallbackContext dismissCallback = null;
 	private final String TAG = "PIP";
 	private boolean hasPIPMode = false;
-	private boolean isPipActive = false;
+	private boolean isInBackground = false;
 	
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
@@ -61,55 +60,42 @@ public class PIP extends CordovaPlugin {
         }
         return false;
     }
-    
-    @Override
-    public void onConfigurationChanged(Configuration newConfig){
-        super.onConfigurationChanged(newConfig);
-
-        if (!hasPIPMode) {
-            return;
-        }
-        
-        try {
-            isPipActive = cordova.getActivity().isInPictureInPictureMode();
-            Log.d(TAG, "pipChanged " + isPipActive);
-
-            if (modeChangeCallback == null) {
-                return;
-            }
-            PluginResult result = new PluginResult(PluginResult.Status.OK, isPipActive);
-            result.setKeepCallback(true);
-            modeChangeCallback.sendPluginResult(result);
-        } catch(Exception e) {
-            isPipActive = false;
-
-            if (modeChangeCallback == null) {
-                return;
-            }
-            String stackTrace = Log.getStackTraceString(e);
-            Log.d(TAG, "pipChanged ERR " + stackTrace);
-
-            PluginResult result = new PluginResult(PluginResult.Status.ERROR, stackTrace);
-            result.setKeepCallback(true);
-            modeChangeCallback.sendPluginResult(result);
-        }
-    }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        if (!hasPIPMode) {
-            return;
-        }
-        if (isPipActive && dismissCallback != null && !cordova.getActivity().isInPictureInPictureMode()) {
-            Log.d(TAG, "User dismissed PIP mode");
+    public Object onMessage(String id, Object data) {
+        if (id.equals("onPictureInPictureModeChanged")) {
+            boolean active = (Boolean) data;
+            Log.d(TAG, "onPictureInPictureModeChanged: " + active);
+            if (modeChangeCallback != null) {
+                PluginResult result = new PluginResult(PluginResult.Status.OK, active);
+                result.setKeepCallback(true);
+                modeChangeCallback.sendPluginResult(result);
+            }
+
             // User drag to close PIP or click in the close button
-            PluginResult pluginResult = new PluginResult(PluginResult.Status.OK);
-            pluginResult.setKeepCallback(true); 
-            dismissCallback.sendPluginResult(pluginResult);
+            if (dismissCallback != null && isInBackground && !active) {
+                Log.d(TAG, "User dismissed PIP mode");
+                PluginResult pluginResult = new PluginResult(PluginResult.Status.OK);
+                pluginResult.setKeepCallback(true);
+                dismissCallback.sendPluginResult(pluginResult);
+            }
+            return null;
         }
+        return super.onMessage(id, data);
     }
-    
+
+    @Override
+    public void onPause(boolean multitasking) {
+        super.onPause(multitasking);
+        isInBackground = true;
+    }
+
+    @Override
+    public void onResume(boolean multitasking) {
+        super.onResume(multitasking);
+        isInBackground = false;
+    }
+
     private void enterPip(Double width, Double height, CallbackContext callbackContext) {
         if (!hasPIPMode) {
             callbackContext.error("Picture-in-picture unavailable.");
@@ -143,19 +129,16 @@ public class PIP extends CordovaPlugin {
     }
     
     private void isPipModeSupported(CallbackContext callbackContext) {
-		if(hasPIPMode){
-			callbackContext.success("true");
-		} else {
-			callbackContext.success("false");
-		}
+        PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, hasPIPMode);
+        callbackContext.sendPluginResult(pluginResult);
     }
 
     public void isPip(CallbackContext callbackContext) {
-		String ret = "false";
-		if(hasPIPMode && cordova.getActivity().isInPictureInPictureMode()){
-			ret = "true";
+		boolean active = false;
+		if (hasPIPMode) {
+            active = cordova.getActivity().isInPictureInPictureMode();
 		}
-		callbackContext.success(ret);
+        PluginResult pluginResult = new PluginResult(PluginResult.Status.OK, active);
+        callbackContext.sendPluginResult(pluginResult);
     }
-    
 }

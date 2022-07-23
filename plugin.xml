@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin id="qik.cordova.pip" version="0.0.3"
+<plugin id="qik.cordova.pip" version="0.0.4"
     xmlns="http://apache.org/cordova/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <name>PIP</name>
@@ -14,5 +14,6 @@
             </feature>
         </config-file>
         <source-file src="src/android/PIP.java" target-dir="src/qik/cordova/pip" />
+        <source-file src="src/android/PIPActivity.java" target-dir="src/mt/qik/app" />
     </platform>
 </plugin>
